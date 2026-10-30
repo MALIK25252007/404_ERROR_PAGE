@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 · Error</title>
+<style>
+  :root{
+    --bg: #3a3d3f;
+    --card-sky-top: #6d7478;
+    --card-sky-bottom: #454a4c;
+    --ink-deep: #0c0d0e;
+    --text-main: #f2f3f4;
+    --text-muted: #c7cbcd;
+    --text-faint: #9aa0a3;
+    --line: rgba(242,243,244,0.55);
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 20% 10%, #4b4e50 0%, #34373a 45%, #2a2c2e 100%);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-main);
+  }
+
+  .stage{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+
+  .arcs{
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .arcs.top-right{ top: -20px; right: -10px; }
+  .arcs.bottom-left{ bottom: -20px; left: -10px; transform: rotate(180deg); }
+  .arcs svg{ width: 100%; height: 100%; }
+
+  .card{
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+    isolation: isolate;
+  }
+
+  .scene{
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(180deg, var(--card-sky-top) 0%, #5a6063 30%, #33373a 62%, var(--ink-deep) 100%);
+  }
+  .scene svg{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .fog-layer{
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    mix-blend-mode: screen;
+    opacity: 0.55;
+    filter: blur(2px);
+    pointer-events: none;
+  }
+  .fog-layer .drift{
+    position: absolute;
+    top: 40%;
+    left: -30%;
+    width: 160%;
+    height: 30%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 70%);
+    animation: driftFog 26s ease-in-out infinite;
+  }
+  .fog-layer .drift.d2{
+    top: 58%;
+    animation-duration: 34s;
+    animation-delay: -8s;
+    opacity: 0.7;
+  }
+  .fog-layer .drift.d3{
+    top: 25%;
+    animation-duration: 40s;
+    animation-delay: -20s;
+    opacity: 0.4;
+  }
+  @keyframes driftFog{
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(12%); }
+    100% { transform: translateX(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .fog-layer .drift{ animation: none; }
+  }
+
+  .darken{
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.75) 100%);
+  }
+
+  .content{
+    position: relative;
+    z-index: 3;
+    padding: 64px 40px 44px;
+    text-align: center;
+  }
+
+  .eyebrow{
+    margin: 0 0 46px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: var(--text-main);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+
+  .code{
+    margin: 0;
+    font-size: clamp(88px, 14vw, 160px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 4px;
+    color: rgba(230,232,233,0.5);
+    text-shadow: 0 6px 30px rgba(0,0,0,0.5);
+  }
+
+  .headline{
+    margin: 18px 0 10px;
+    font-size: clamp(24px, 3.4vw, 34px);
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .subline{
+    margin: 0 0 40px;
+    font-size: 15px;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+
+  .cta{
+    display: inline-block;
+    padding: 16px 40px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--text-main);
+    background: transparent;
+    border: 1.5px solid var(--line);
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  }
+  .cta:hover{
+    background: var(--text-main);
+    color: #1a1c1e;
+    transform: translateY(-1px);
+  }
+  .cta:focus-visible{
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  .foot{
+    margin: 56px 0 4px;
+    font-size: 12.5px;
+    color: var(--text-faint);
+  }
+  .foot b{
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+
+  @media (max-width: 560px){
+    .content{ padding: 48px 20px 32px; }
+    .eyebrow{ letter-spacing: 4px; margin-bottom: 30px; }
+    .foot{ margin-top: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <div class="arcs top-right" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <g fill="none" stroke="#d8dadb" stroke-width="6" stroke-linecap="round">
+        <path d="M20 140 A120 120 0 0 1 140 20" opacity="0.9"/>
+        <path d="M50 160 A150 150 0 0 1 160 50" opacity="0.6"/>
+        <path d="M80 180 A180 180 0 0 1 180 80" opacity="0.35"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="arcs bottom-left" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <g fill="none" stroke="#d8dadb" stroke-width="6" stroke-linecap="round">
+        <path d="M20 140 A120 120 0 0 1 140 20" opacity="0.9"/>
+        <path d="M50 160 A150 150 0 0 1 160 50" opacity="0.6"/>
+        <path d="M80 180 A180 180 0 0 1 180 80" opacity="0.35"/>
+      </g>
+    </svg>
+  </div>
+
+  <main class="card" role="main">
+
+    <div class="scene" aria-hidden="true">
+      <svg viewBox="0 0 1400 700" preserveAspectRatio="none">
+    
+        <polygon points="0,300 120,260 260,300 400,255 560,300 720,250 900,295 1080,260 1250,300 1400,270 1400,700 0,700"
+                 fill="#4a4f52" opacity="0.55"/>
+  
+        <polygon points="0,360 150,320 320,370 500,310 680,365 860,320 1040,375 1220,330 1400,370 1400,700 0,700"
+                 fill="#31363a" opacity="0.75"/>
+     
+        <path d="M0,430
+                 L40,410 L55,430 L75,395 L95,430 L120,400 L140,432
+                 L170,405 L190,432 L215,398 L235,432 L260,408 L280,432
+                 L310,392 L330,432 L360,402 L380,432 L410,410 L430,432
+                 L460,396 L480,432 L510,406 L530,432 L560,400 L580,432
+                 L610,392 L630,432 L660,404 L680,432 L710,398 L730,432
+                 L760,408 L780,432 L810,394 L830,432 L860,404 L880,432
+                 L910,398 L930,432 L960,406 L980,432 L1010,392 L1030,432
+                 L1060,402 L1080,432 L1110,396 L1130,432 L1160,406 L1180,432
+                 L1210,398 L1230,432 L1260,410 L1280,432 L1310,400 L1330,432
+                 L1360,412 L1400,432
+                 L1400,700 L0,700 Z"
+              fill="#181b1c"/>
+      </svg>
+    </div>
+
+    <div class="fog-layer" aria-hidden="true">
+      <div class="drift"></div>
+      <div class="drift d2"></div>
+      <div class="drift d3"></div>
+    </div>
+
+    <div class="darken" aria-hidden="true"></div>
+
+    <div class="content">
+      <p class="eyebrow">404 ERROR</p>
+      <p class="code">404</p>
+      <h1 class="headline">Page not found</h1>
+      <p class="subline">I tried to catch some fog, but i missed it</p>
+      <a class="cta" href="#">Back to Home</a>
+      <p class="foot">© 2026 Fog error. All rights reserved | Design by <b>Tarun Malik</b></p>
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>
